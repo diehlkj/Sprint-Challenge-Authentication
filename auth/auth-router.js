@@ -6,7 +6,7 @@ const Model = require('./auth-model.js');
 
 router.post('/register', (req, res) => {
   let userData = req.body;
-  const hash = bcrypt.hashSync(userData.password, 16);
+  const hash = bcrypt.hashSync(userData.password, 10);
   userData.password = hash;
 
   Model.insertUser(userData)
