@@ -17,7 +17,7 @@ function findById(id) {
         .first();
 };
 
-function insertUser(userData) {
+async function insertUser(userData) {
     const [id] = await db('users').insert(userData);
     return findById(id);
 };

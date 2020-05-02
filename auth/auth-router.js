@@ -6,7 +6,7 @@ const Model = require('./auth-model.js');
 
 router.post('/register', (req, res) => {
   let userData = req.body;
-  const hash = jwt.hashSync(userData.password, 16);
+  const hash = bcrypt.hashSync(userData.password, 16);
   userData.password = hash;
 
   Model.insertUser(userData)
@@ -40,7 +40,10 @@ router.post('/login', (req, res) => {
 });
 
 function generateToken(userData) {
-
+  const payload = { userid: userData.id, username: userData.username };
+  const options = { expiresIn: '1h' };
+  const token = jwt.sign(payload, secret.jwtSecret, options);
+  return token;
 }
 
 module.exports = router;
